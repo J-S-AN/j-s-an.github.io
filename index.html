@@ -1,11 +1,66 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="monetag" content="715066c110417d014e12c391ed2a2c18">
-<title>Verificação Monetag</title>
+    <meta charset="UTF-8">
+    <meta name="monetag" content="715066c110417d014e12c391ed2a2c18">
+    <title>Carregando...</title>
+
+    <!-- Ícone -->
+    <link rel="icon" href="https://j-s-an.github.io/anime/jose.ico" type="image/x-icon">
+
+    <!-- Redirecionamento automático -->
+    <meta http-equiv="refresh" content="0; url=/anime/">
+
+    <style>
+        body {
+            background: #000;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .logo {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            animation: pulse 1.2s infinite alternate ease-in-out;
+        }
+
+        .text {
+            margin-top: 20px;
+            font-size: 22px;
+            animation: fade 1s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from { transform: scale(0.88); opacity: 0.6; }
+            to { transform: scale(1.08); opacity: 1; }
+        }
+
+        @keyframes fade {
+            from { opacity: 0.4; }
+            to { opacity: 1; }
+        }
+    </style>
 </head>
+
 <body>
-Verificação Monetag OK
+    <div>
+        <img class="logo" src="https://j-s-an.github.io/anime/jose.ico" alt="JSY ANIME">
+        <div class="text">Carregando, por favor aguarde...</div>
+    </div>
+
+    <script>
+        // Redirecionamento de segurança caso o meta refresh não funcione
+        setTimeout(() => {
+            window.location.href = "/anime/";
+        }, 1200);
+    </script>
 </body>
 </html>
