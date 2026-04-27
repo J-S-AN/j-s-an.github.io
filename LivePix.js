@@ -71,4 +71,26 @@
 
   window.addEventListener("load", () => setTimeout(criarLivePix, 2000));
 
+  // 🔥 manter o LivePix vivo no celular (anti sleep / anti pause)
+function manterAtivo() {
+  const iframe = document.getElementById("livepix-alert");
+  if (!iframe) return;
+
+  // faz um "ping" invisível no iframe
+  iframe.contentWindow?.postMessage("ping", "*");
+
+  // micro refresh a cada 25s (mobile browsers pausam após ~30s)
+  setTimeout(() => {
+    iframe.src = iframe.src;
+  }, 25000);
+}
+
+// roda sempre que a página estiver aberta
+setInterval(manterAtivo, 20000);
+
+// quando usuário volta pra aba
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden) manterAtivo();
+});
+
 })();
