@@ -11,24 +11,35 @@
 
     const mobile = window.innerWidth < 768;
 
-    if (mobile) {
-      // 📱 ALERTA CENTRAL MOBILE COM PROPORÇÃO CORRETA
-      iframe.style.position = "fixed";
-      iframe.style.top = "50%";
-      iframe.style.left = "50%";
-      iframe.style.transform = "translate(-50%, -50%)";
-      iframe.style.width = "95vw";
-      iframe.style.aspectRatio = "16 / 9";   // 🔥 ISSO RESOLVE O CORTE
-      iframe.style.maxWidth = "500px";
-      iframe.style.borderRadius = "16px";
-    } else {
-      // 💻 PC fullscreen
-      iframe.style.position = "fixed";
-      iframe.style.top = "0";
-      iframe.style.left = "0";
-      iframe.style.width = "100vw";
-      iframe.style.height = "100vh";
-    }
+if (mobile) {
+  // 📱 ALERTA CENTRAL RESPONSIVO REAL (funciona em qualquer celular)
+
+  iframe.style.position = "fixed";
+  iframe.style.top = "50%";
+  iframe.style.left = "50%";
+  iframe.style.transform = "translate(-50%, -50%)";
+
+  // pega o menor lado da tela (truque profissional)
+  const menorLado = Math.min(window.innerWidth, window.innerHeight);
+
+  // largura baseada no tamanho real da tela
+  const largura = menorLado * 0.92;   // ocupa 92% da tela
+  const altura = largura * 0.75;      // proporção 4:3 (800x600)
+
+  iframe.style.width = largura + "px";
+  iframe.style.height = altura + "px";
+
+  iframe.style.maxWidth = "500px";   // limite pra não ficar gigante
+  iframe.style.borderRadius = "18px";
+}
+else {
+  // 💻 PC fullscreen
+  iframe.style.position = "fixed";
+  iframe.style.top = "0";
+  iframe.style.left = "0";
+  iframe.style.width = "100vw";
+  iframe.style.height = "100vh";
+}
 
     document.body.appendChild(iframe);
 
