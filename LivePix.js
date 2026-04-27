@@ -1,36 +1,18 @@
 (function () {
 
-  function ajustarTamanho(iframe) {
-
-    const mobile = window.innerWidth < 768;
-
-    if (!mobile) {
-      iframe.style.width = "100vw";
-      iframe.style.height = "100vh";
-      return;
+  function getRealViewportHeight() {
+    // altura REAL visível do celular (corrige bug do 100vh)
+    if (window.visualViewport) {
+      return window.visualViewport.height;
     }
+    return window.innerHeight;
+  }
 
-    // 🔥 usa altura REAL da tela (corrige barra do navegador)
-    const vh = window.visualViewport
-      ? window.visualViewport.height
-      : window.innerHeight;
-
-    const vw = window.visualViewport
-      ? window.visualViewport.width
-      : window.innerWidth;
-
-    // proporção real do widget 800x600
-    let largura = vw * 0.95;
-    let altura = largura * (600 / 800);
-
-    // limita pela altura real da tela
-    if (altura > vh * 0.9) {
-      altura = vh * 0.9;
-      largura = altura * (800 / 600);
+  function getRealViewportWidth() {
+    if (window.visualViewport) {
+      return window.visualViewport.width;
     }
-
-    iframe.style.width = largura + "px";
-    iframe.style.height = altura + "px";
+    return window.innerWidth;
   }
 
   function criarLivePix() {
@@ -47,16 +29,36 @@
     iframe.style.transform = "translate(-50%, -50%)";
     iframe.style.borderRadius = "18px";
 
+    const mobile = window.innerWidth < 768;
+
+    if (mobile) {
+
+  const vw = window.visualViewport ? window.visualViewport.width  : window.innerWidth;
+  const vh = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+
+  // tamanho real do widget LivePix
+  const widgetWidth  = 800;
+  const widgetHeight = 600;
+
+  // calcula escala necessária pra caber na tela
+  const scaleX = (vw * 0.95) / widgetWidth;
+  const scaleY = (vh * 0.95) / widgetHeight;
+  const scale  = Math.min(scaleX, scaleY);
+
+  iframe.style.width  = widgetWidth + "px";
+  iframe.style.height = widgetHeight + "px";
+
+  iframe.style.transform =
+    "translate(-50%, -50%) scale(" + scale + ")";
+
+} else {
+      // Desktop fullscreen
+      iframe.style.width = "100vw";
+      iframe.style.height = "100vh";
+    }
+
     document.body.appendChild(iframe);
 
-    // 🔥 calcula tamanho após carregar
-    setTimeout(() => ajustarTamanho(iframe), 300);
-
-    // 🔥 recalcula se girar tela ou barra sumir/aparecer
-    window.addEventListener("resize", () => ajustarTamanho(iframe));
-    window.addEventListener("orientationchange", () => ajustarTamanho(iframe));
-
-    // liberar áudio
     function liberarAudio() {
       iframe.src = iframe.src;
       document.removeEventListener("click", liberarAudio);
@@ -67,6 +69,6 @@
     document.addEventListener("touchstart", liberarAudio, { passive:true });
   }
 
-  window.addEventListener("load", () => setTimeout(criarLivePix, 1500));
+  window.addEventListener("load", () => setTimeout(criarLivePix, 2000));
 
 })();
