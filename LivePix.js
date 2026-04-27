@@ -1,5 +1,38 @@
 (function () {
 
+  function ajustarTamanho(iframe) {
+
+    const mobile = window.innerWidth < 768;
+
+    if (!mobile) {
+      iframe.style.width = "100vw";
+      iframe.style.height = "100vh";
+      return;
+    }
+
+    // 🔥 usa altura REAL da tela (corrige barra do navegador)
+    const vh = window.visualViewport
+      ? window.visualViewport.height
+      : window.innerHeight;
+
+    const vw = window.visualViewport
+      ? window.visualViewport.width
+      : window.innerWidth;
+
+    // proporção real do widget 800x600
+    let largura = vw * 0.95;
+    let altura = largura * (600 / 800);
+
+    // limita pela altura real da tela
+    if (altura > vh * 0.9) {
+      altura = vh * 0.9;
+      largura = altura * (800 / 600);
+    }
+
+    iframe.style.width = largura + "px";
+    iframe.style.height = altura + "px";
+  }
+
   function criarLivePix() {
     const iframe = document.createElement("iframe");
     iframe.id = "livepix-alert";
@@ -8,41 +41,22 @@
     iframe.style.border = "none";
     iframe.style.zIndex = "999999";
     iframe.style.pointerEvents = "none";
-
-    const mobile = window.innerWidth < 768;
-
-if (mobile) {
-  // 📱 ALERTA CENTRAL RESPONSIVO REAL (funciona em qualquer celular)
-
-  iframe.style.position = "fixed";
-  iframe.style.top = "50%";
-  iframe.style.left = "50%";
-  iframe.style.transform = "translate(-50%, -50%)";
-
-  // pega o menor lado da tela (truque profissional)
-  const menorLado = Math.min(window.innerWidth, window.innerHeight);
-
-  // largura baseada no tamanho real da tela
-  const largura = menorLado * 0.92;   // ocupa 92% da tela
-  const altura = largura * 0.75;      // proporção 4:3 (800x600)
-
-  iframe.style.width = largura + "px";
-  iframe.style.height = altura + "px";
-
-  iframe.style.maxWidth = "500px";   // limite pra não ficar gigante
-  iframe.style.borderRadius = "18px";
-}
-else {
-  // 💻 PC fullscreen
-  iframe.style.position = "fixed";
-  iframe.style.top = "0";
-  iframe.style.left = "0";
-  iframe.style.width = "100vw";
-  iframe.style.height = "100vh";
-}
+    iframe.style.position = "fixed";
+    iframe.style.top = "50%";
+    iframe.style.left = "50%";
+    iframe.style.transform = "translate(-50%, -50%)";
+    iframe.style.borderRadius = "18px";
 
     document.body.appendChild(iframe);
 
+    // 🔥 calcula tamanho após carregar
+    setTimeout(() => ajustarTamanho(iframe), 300);
+
+    // 🔥 recalcula se girar tela ou barra sumir/aparecer
+    window.addEventListener("resize", () => ajustarTamanho(iframe));
+    window.addEventListener("orientationchange", () => ajustarTamanho(iframe));
+
+    // liberar áudio
     function liberarAudio() {
       iframe.src = iframe.src;
       document.removeEventListener("click", liberarAudio);
@@ -53,6 +67,6 @@ else {
     document.addEventListener("touchstart", liberarAudio, { passive:true });
   }
 
-  window.addEventListener("load", () => setTimeout(criarLivePix, 2000));
+  window.addEventListener("load", () => setTimeout(criarLivePix, 1500));
 
 })();
