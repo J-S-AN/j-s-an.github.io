@@ -12,17 +12,17 @@
     const mobile = window.innerWidth < 768;
 
     if (mobile) {
-      // 📱 ALERTA CENTRAL MOBILE (popup)
+      // 📱 ALERTA CENTRAL MOBILE COM PROPORÇÃO CORRETA
       iframe.style.position = "fixed";
       iframe.style.top = "50%";
       iframe.style.left = "50%";
       iframe.style.transform = "translate(-50%, -50%)";
       iframe.style.width = "95vw";
-      iframe.style.height = "160px";   // altura ideal do alerta
+      iframe.style.aspectRatio = "16 / 9";   // 🔥 ISSO RESOLVE O CORTE
       iframe.style.maxWidth = "500px";
       iframe.style.borderRadius = "16px";
     } else {
-      // 💻 PC continua fullscreen
+      // 💻 PC fullscreen
       iframe.style.position = "fixed";
       iframe.style.top = "0";
       iframe.style.left = "0";
