@@ -93,4 +93,54 @@ document.addEventListener("visibilitychange", () => {
   if (!document.hidden) manterAtivo();
 });
 
+// =============================
+// NOVOS WIDGETS TOPO (ESQ + DIR)
+// =============================
+
+function criarWidgetTopo(src, lado) {
+  const iframe = document.createElement("iframe");
+  iframe.src = src;
+  iframe.allow = "autoplay; fullscreen";
+  iframe.style.position = "fixed";
+  iframe.style.top = "10px";
+  iframe.style.width = "320px";
+  iframe.style.height = "120px";
+  iframe.style.border = "none";
+  iframe.style.zIndex = "999998";
+  iframe.style.pointerEvents = "none";
+  iframe.style.borderRadius = "14px";
+
+  if (lado === "direita") {
+    iframe.style.right = "10px";
+  } else {
+    iframe.style.left = "10px";
+  }
+
+  // mobile responsivo
+  if (window.innerWidth < 768) {
+    iframe.style.width = "45vw";
+    iframe.style.height = "14vh";
+  }
+
+  document.body.appendChild(iframe);
+}
+
+window.addEventListener("load", () => {
+  setTimeout(() => {
+
+    // topo direita
+    criarWidgetTopo(
+      "https://widget.livepix.gg/embed/ba5ac8db-0f65-43ba-9d4f-e61cdfe51aa9",
+      "direita"
+    );
+
+    // topo esquerda
+    criarWidgetTopo(
+      "https://widget.livepix.gg/embed/ec7dab89-48cf-4eba-928c-698938d777ed",
+      "esquerda"
+    );
+
+  }, 2500);
+});
+
 })();
