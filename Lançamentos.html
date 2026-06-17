@@ -489,6 +489,9 @@
           .map(q => q.trim());
 
         let badgesHTML = '';
+        if (qualidades.includes('FIXO')) {
+          badgesHTML += `<span class="badge fixo">FIXO</span>`;
+          }
         if (qualidades.includes('SD')) {
           badgesHTML += `<span class="badge sd">SD</span>`;
         }

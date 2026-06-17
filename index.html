@@ -521,6 +521,7 @@
             let badgesQualidade = "";
             let badgeIdioma = "";
 
+            if (qualidade.includes("FIXO")) badgesQualidade += `<span class="badge fixo">FIXO</span>`;
             if (qualidade.includes("SD")) badgesQualidade += `<span class="badge sd">SD</span>`;
             if (qualidade.includes("HD")) badgesQualidade += `<span class="badge hd">HD</span>`;
             if (qualidade.includes("FHD")) badgesQualidade += `<span class="badge fhd">FHD</span>`;
