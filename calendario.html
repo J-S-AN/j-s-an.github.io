@@ -315,11 +315,6 @@
             color: #000000;
         }
 
-        .badge.dub {
-            background: #ff9800;
-            color: #000;
-        }
-
         .badge.em-breve {
             background: #00e1ff;
             color: #000000;
@@ -327,6 +322,19 @@
 
         .card {
             position: relative;
+        }
+
+        .badge-dub {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            background: #ff9800;
+            color: #000;
+            padding: 4px 8px;
+            font-size: 11px;
+            font-weight: bold;
+            border-radius: 6px;
+            z-index: 2;
         }
     </style>
 </head>
@@ -361,8 +369,8 @@
         const hoje = dias[new Date().getDay()];
         const url = "https://docs.google.com/spreadsheets/d/1QPSqwuXb-2De4SvQ3WuJVbQbWMtPsv3SxjTeGtpuTVo/gviz/tq?tqx=out:json&sheet=calendario";
 
-        // CARD COM BADGE
-        function criarCard({ img, titulo, link, status }) {
+        // CARD COM BADGES
+        function criarCard({ img, titulo, link, status, idioma }) {
             const a = document.createElement("a");
             a.href = link;
             a.className = "card";
@@ -371,15 +379,21 @@
                 ? status.toLowerCase().replace(/\s+/g, '-')
                 : '';
 
-            const badge = status && status !== "ativo"
+            const badgeStatus = status && status.toLowerCase() !== "ativo"
                 ? `<div class="badge ${statusClass}">${status}</div>`
                 : "";
 
+            const badgeDub = idioma && idioma.toUpperCase() === "DUB"
+                ? `<div class="badge-dub">DUB</div>`
+                : "";
+
             a.innerHTML = `
-            ${badge}
+            ${badgeStatus}
+            ${badgeDub}
             <img src="${img}" alt="${titulo}">
             <div class="card-content">${titulo}</div>
         `;
+
             return a;
         }
 
@@ -398,8 +412,7 @@
                 lista.innerHTML = `<div style="color:#888;padding:10px;">Nenhum anime neste dia.</div>`;
             } else {
                 animes.forEach(anime => {
-                    const card = criarCard(anime);
-                    lista.appendChild(card);
+                    lista.appendChild(criarCard(anime));
                 });
             }
 
@@ -421,24 +434,28 @@
                     const nome = row.c[1]?.v;
                     const img = row.c[2]?.v;
                     const link = row.c[3]?.v;
-                    const status = row.c[4]?.v?.toLowerCase() || "ativo";
+
+                    const status = row.c[4]?.v?.toString().trim() || "ativo";
+                    const idioma = row.c[5]?.v?.toString().trim() || "";
 
                     if (dia && nome && img && link && dias.includes(dia)) {
                         diasAnimes[dia].push({
                             titulo: nome,
                             img,
                             link,
-                            status
+                            status,
+                            idioma
                         });
-
                     }
                 });
 
                 const conteudo = document.getElementById("conteudo");
 
-                // Reorganiza os dias a partir de hoje
                 const indexHoje = dias.indexOf(hoje);
-                const ordemDias = [...dias.slice(indexHoje), ...dias.slice(0, indexHoje)];
+                const ordemDias = [
+                    ...dias.slice(indexHoje),
+                    ...dias.slice(0, indexHoje)
+                ];
 
                 ordemDias.forEach(dia => {
                     conteudo.appendChild(criarDia(dia, diasAnimes[dia] || []));
@@ -470,7 +487,7 @@
         </script>
     </div>
 
-    <script>(function(s){s.dataset.zone='10964953',s.src='https://n6wxm.com/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+    <script>(function (s) { s.dataset.zone = '10964953', s.src = 'https://n6wxm.com/vignette.min.js' })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
 
     <!-- LivePix Alert Overlay FULLSCREEN -->
     <script src="LivePix.js"></script>

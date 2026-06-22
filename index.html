@@ -431,11 +431,6 @@
             color: #000000;
         }
 
-        .badge2.dub {
-            background: #ff9800;
-            color: #000;
-        }
-
         .badge2.em-breve {
             background: #00e1ff;
             color: #000000;
@@ -443,6 +438,19 @@
 
         .badge2.ativo {
             display: none;
+        }
+
+        .badge-dub {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            background: #ff9800;
+            color: #000000;
+            padding: 4px 8px;
+            font-size: 11px;
+            font-weight: bold;
+            border-radius: 6px;
+            z-index: 2;
         }
     </style>
 </head>
@@ -493,29 +501,6 @@
         document.getElementById("menu-toggle").onclick = () =>
             document.getElementById("menu-links").classList.toggle("active");
 
-        /* ================= CARD: CALENDÁRIO / LISTA ================= */
-        function criarCardSimples({ img, titulo, link, status = "ativo" }) {
-            const a = document.createElement("a");
-            a.href = link;
-            a.className = "card";
-
-            const statusClass = status
-                ? status.toLowerCase().replace(/\s+/g, '-')
-                : '';
-
-            const badge = status !== "ativo"
-                ? `<div class="badge2 ${statusClass}">${status}</div>`
-                : "";
-
-            a.innerHTML = `
-    ${badge}
-    <img src="${img}" alt="${titulo}">
-    <div class="card-content">${titulo}</div>
-  `;
-            return a;
-        }
-
-
         /* ================= CARD: LANÇAMENTOS ================= */
         function criarCardLancamento({ img, titulo, link, qualidade = [], dublado = false }) {
             let badgesQualidade = "";
@@ -565,10 +550,12 @@
                             link: r.c[3]?.v,
                             status: r.c[4]?.v
                                 ?.toString()
-                                .trim()
-                                .toLowerCase() || "ativo"
-                        }));
+                                .trim() || "ativo",
 
+                            idioma: r.c[5]?.v
+                                ?.toString()
+                                .trim() || ""
+                        }));
                     });
 
                     let i = 0;
@@ -581,6 +568,35 @@
                     }, 2500);
                 });
         })();
+
+        /* ================= CARD: CALENDÁRIO / LISTA ================= */
+        function criarCardSimples({ img, titulo, link, status = "ativo", idioma = "" }) {
+            const a = document.createElement("a");
+            a.href = link;
+            a.className = "card";
+
+            const statusClass = status
+                ? status.toLowerCase().replace(/\s+/g, '-')
+                : '';
+
+            const badgeStatus = status.toLowerCase() !== "ativo"
+                ? `<div class="badge2 ${statusClass}">${status}</div>`
+                : "";
+
+            const badgeDub = idioma.toUpperCase() === "DUB"
+                ? `<div class="badge-dub">DUB</div>`
+                : "";
+
+            a.innerHTML = `
+        ${badgeStatus}
+        ${badgeDub}
+        <img src="${img}" alt="${titulo}">
+        <div class="card-content">${titulo}</div>
+    `;
+
+            return a;
+        }
+
 
         /* ================= LANÇAMENTOS ================= */
         (function () {
@@ -821,7 +837,7 @@
 
     <!-- ===== FIM DO POPUP ===== -->
 
-    <script>(function(s){s.dataset.zone='10964953',s.src='https://n6wxm.com/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+    <script>(function (s) { s.dataset.zone = '10964953', s.src = 'https://n6wxm.com/vignette.min.js' })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
 
 
     <!-- LivePix Alert Overlay FULLSCREEN -->
