@@ -522,29 +522,94 @@
             const totalPages = Math.ceil(filteredData.length / itemsPerPage);
             if (totalPages <= 1) return;
 
-            const maxButtons = 6;
+            const maxButtons = 5;
+
             let start = Math.max(0, currentPage - Math.floor(maxButtons / 2));
             let end = Math.min(totalPages - 1, start + maxButtons - 1);
+            start = Math.max(0, end - maxButtons + 1);
 
+            // BOTÃO ANTERIOR
+            const prev = document.createElement('button');
+            prev.textContent = 'Anterior';
+            prev.disabled = currentPage === 0;
+            prev.dataset.page = currentPage - 1;
+            pagination.appendChild(prev);
+
+            // BOTÕES NUMÉRICOS
             for (let i = start; i <= end; i++) {
                 const btn = document.createElement('button');
                 btn.textContent = i + 1;
-                if (i === currentPage) btn.classList.add('active');
                 btn.dataset.page = i;
+
+                if (i === currentPage) btn.classList.add('active');
                 pagination.appendChild(btn);
             }
+
+            // BOTÃO PRÓXIMO
+            const next = document.createElement('button');
+            next.textContent = 'Próximo';
+            next.disabled = currentPage === totalPages - 1;
+            next.dataset.page = currentPage + 1;
+            pagination.appendChild(next);
         }
 
-        // --- CLIQUE NOS BOTÕES (delegação) ---
+        // --- CLIQUE NOS BOTÕES ---
         pagination.addEventListener('click', e => {
             const btn = e.target.closest('button');
             if (!btn) return;
-            currentPage = parseInt(btn.dataset.page);
+
+            const page = Number(btn.dataset.page);
+
+            // bloqueia botão inválido (isso evita o erro)
+            if (Number.isNaN(page)) return;
+            if (page < 0) return;
+
+            currentPage = page;
             renderPage();
             updatePagination();
             updateURL();
+
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
+
+        function updatePagination() {
+            pagination.innerHTML = '';
+
+            const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+            if (totalPages <= 1) return;
+
+            const maxButtons = 5;
+
+            let start = Math.max(0, currentPage - Math.floor(maxButtons / 2));
+            let end = Math.min(totalPages - 1, start + maxButtons - 1);
+            start = Math.max(0, end - maxButtons + 1);
+
+            // ANTERIOR (só aparece se não for primeira página)
+            if (currentPage > 0) {
+                const prev = document.createElement('button');
+                prev.textContent = 'Anterior';
+                prev.dataset.page = currentPage - 1;
+                pagination.appendChild(prev);
+            }
+
+            // números
+            for (let i = start; i <= end; i++) {
+                const btn = document.createElement('button');
+                btn.textContent = i + 1;
+                btn.dataset.page = i;
+
+                if (i === currentPage) btn.classList.add('active');
+                pagination.appendChild(btn);
+            }
+
+            // PRÓXIMO (só aparece se não for última página)
+            if (currentPage < totalPages - 1) {
+                const next = document.createElement('button');
+                next.textContent = 'Próximo';
+                next.dataset.page = currentPage + 1;
+                pagination.appendChild(next);
+            }
+        }
 
         // --- ATUALIZA URL ---
         function updateURL() {
@@ -580,7 +645,7 @@
         window.addEventListener('hashchange', loadFromURL);
     </script>
 
-    <script>(function(s){s.dataset.zone='10964953',s.src='https://n6wxm.com/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+    <script>(function (s) { s.dataset.zone = '10964953', s.src = 'https://n6wxm.com/vignette.min.js' })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
 
 
     <!-- SEU PRÓXIMO BLOCO DE CÓDIGO -->
