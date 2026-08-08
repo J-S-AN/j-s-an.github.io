@@ -340,8 +340,8 @@
     }
 
     .badge.fixo {
-            background: #000000;
-        }
+      background: #000000;
+    }
 
     .card {
       position: relative;
@@ -381,6 +381,7 @@
         <li><a href="em-breve.html">Em Breve</a></li>
         <li><a href="lista-anime.html">Lista de Anime</a></li>
         <li><a href="Pedido-de-Anime.html">Pedido de Anime</a></li>
+        <li><a href="Corrigir-Episodio.html">Corrigir Episódio</a></li>
       </ul>
     </nav>
   </header>
@@ -440,7 +441,30 @@
           return;
         }
 
-        allRows = Array.isArray(json.table?.rows) ? json.table.rows.reverse() : [];
+        if (Array.isArray(json.table?.rows)) {
+          const rows = json.table.rows.reverse();
+
+          const fixos = [];
+          const normais = [];
+
+          rows.forEach(row => {
+            const qualidades = (row.c?.[6]?.v || "")
+              .toUpperCase()
+              .split(",")
+              .map(q => q.trim());
+
+            if (qualidades.includes("FIXO")) {
+              fixos.push(row);
+            } else {
+              normais.push(row);
+            }
+          });
+
+          // FIXOS primeiro, depois os demais
+          allRows = [...fixos, ...normais];
+        } else {
+          allRows = [];
+        }
         if (allRows.length === 0) {
           showError('Planilha carregada, mas sem linhas.');
           return;
@@ -491,7 +515,7 @@
         let badgesHTML = '';
         if (qualidades.includes('FIXO')) {
           badgesHTML += `<span class="badge fixo">FIXO</span>`;
-          }
+        }
         if (qualidades.includes('SD')) {
           badgesHTML += `<span class="badge sd">SD</span>`;
         }
@@ -590,7 +614,7 @@
     <iframe data-aa='2409970' src='//acceptable.a-ads.com/2409970/?size=Adaptive'
       style='border:0; padding:0; width:70%; height:auto; overflow:hidden;display: block;margin: auto'></iframe>
   </div>
-  <script>(function(s){s.dataset.zone='10964953',s.src='https://n6wxm.com/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+  <script>(function (s) { s.dataset.zone = '10964953', s.src = 'https://n6wxm.com/vignette.min.js' })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
   <br>
 
   <div>
@@ -717,7 +741,7 @@
   <!-- ===== FIM DO POPUP ===== -->
 
   <!-- LivePix Alert Overlay FULLSCREEN -->
-    <script src="LivePix.js"></script>
+  <script src="LivePix.js"></script>
 
 </body>
 

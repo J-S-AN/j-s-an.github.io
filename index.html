@@ -474,6 +474,7 @@
             <li><a href="em-breve.html">Em Breve</a></li>
             <li><a href="lista-anime.html">Lista de Anime</a></li>
             <li><a href="Pedido-de-Anime.html">Pedido de Anime</a></li>
+            <li><a href="Corrigir-Episodio.html">Corrigir Episódio</a></li>
         </ul>
     </nav>
 
@@ -505,30 +506,6 @@
         /* ================= MENU ================= */
         document.getElementById("menu-toggle").onclick = () =>
             document.getElementById("menu-links").classList.toggle("active");
-
-        /* ================= CARD: LANÇAMENTOS ================= */
-        function criarCardLancamento({ img, titulo, link, qualidade = [], dublado = false }) {
-            let badgesQualidade = "";
-            let badgeIdioma = "";
-
-            if (qualidade.includes("FIXO")) badgesQualidade += `<span class="badge fixo">FIXO</span>`;
-            if (qualidade.includes("SD")) badgesQualidade += `<span class="badge sd">SD</span>`;
-            if (qualidade.includes("HD")) badgesQualidade += `<span class="badge hd">HD</span>`;
-            if (qualidade.includes("FHD")) badgesQualidade += `<span class="badge fhd">FHD</span>`;
-            if (dublado) badgeIdioma = `<span class="badge dub">DUB</span>`;
-
-            const a = document.createElement("a");
-            a.href = link;
-            a.rel = "noopener";
-            a.className = "card";
-            a.innerHTML = `
-    <div class="quality-badges">${badgesQualidade}</div>
-    <div class="language-badge">${badgeIdioma}</div>
-    <img src="${img}" alt="${titulo}">
-    <div class="card-content"><p class="titulo">${titulo}</p></div>
-  `;
-            return a;
-        }
 
         /* ================= CALENDÁRIO ================= */
         (function () {
@@ -604,6 +581,8 @@
 
 
         /* ================= LANÇAMENTOS ================= */
+        function criarCardLancamento({ img, titulo, link, qualidade = [], dublado = false }) { let badgesQualidade = ""; let badgeIdioma = ""; if (qualidade.includes("FIXO")) badgesQualidade += `<span class="badge fixo">FIXO</span>`; if (qualidade.includes("SD")) badgesQualidade += `<span class="badge sd">SD</span>`; if (qualidade.includes("HD")) badgesQualidade += `<span class="badge hd">HD</span>`; if (qualidade.includes("FHD")) badgesQualidade += `<span class="badge fhd">FHD</span>`; if (dublado) badgeIdioma = `<span class="badge dub">DUB</span>`; const a = document.createElement("a"); a.href = link; a.rel = "noopener"; a.className = "card"; a.innerHTML = ` <div class="quality-badges">${badgesQualidade}</div> <div class="language-badge">${badgeIdioma}</div> <img src="${img}" alt="${titulo}"> <div class="card-content"> <p class="titulo">${titulo}</p> </div> `; return a; }
+
         (function () {
             const el = document.getElementById("lancamentos");
             const url = "https://docs.google.com/spreadsheets/d/1QPSqwuXb-2De4SvQ3WuJVbQbWMtPsv3SxjTeGtpuTVo/gviz/tq?tqx=out:json&sheet=lancamento";
@@ -611,20 +590,45 @@
             fetch(url)
                 .then(r => r.text())
                 .then(txt => {
-                    const rows = JSON.parse(txt.substr(47).slice(0, -2))
-                        .table.rows.reverse().slice(0, 20);
+
+                    const rows = JSON.parse(txt.substr(47).slice(0, -2)).table.rows.reverse();
+
+                    const fixos = [];
+                    const normais = [];
 
                     rows.forEach(row => {
+
+                        const qualidade = row.c[6]?.v
+                            ? row.c[6].v.toUpperCase().split(",").map(q => q.trim())
+                            : [];
+
+                        if (qualidade.includes("FIXO")) {
+                            fixos.push(row);
+                        } else {
+                            normais.push(row);
+                        }
+                    });
+
+                    const rowsOrdenadas = [...fixos, ...normais].slice(0, 20);
+
+                    rowsOrdenadas.forEach(row => {
+
                         const nome = row.c[1]?.v || "";
                         const ep = row.c[2]?.v;
                         const idioma = (row.c[3]?.v || "").toLowerCase();
-                        const qualidade = row.c[6]?.v ? row.c[6].v.toUpperCase().split(",") : [];
+
+                        const qualidade = row.c[6]?.v
+                            ? row.c[6].v.toUpperCase().split(",").map(q => q.trim())
+                            : [];
+
                         const finalTxt = row.c[5]?.v === "Final" ? " Final" : "";
 
                         let titulo =
-                            ep === "Filme" ? `${nome} - Filme` :
-                                ep ? `${nome} - Episódio ${ep}${finalTxt}` :
-                                    `${nome}${finalTxt}`;
+                            ep === "Filme"
+                                ? `${nome} - Filme`
+                                : ep
+                                    ? `${nome} - Episódio ${ep}${finalTxt}`
+                                    : `${nome}${finalTxt}`;
 
                         el.appendChild(criarCardLancamento({
                             img: row.c[0]?.v,
