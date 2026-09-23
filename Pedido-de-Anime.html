@@ -291,131 +291,131 @@
                 color: #ff0000;
                 text-decoration: underline;
             }
-        /* CARDS - ANIMES EM PROCESSAMENTO */
-        .processamento-titulo {
-            text-align: center;
-            margin: 0 0 10px;
-            color: #ffd700;
-        }
 
-        .processamento-aviso {
-            text-align: center;
-            color: #ccc;
-            margin: 0 0 25px;
-            line-height: 1.6;
-        }
+            /* CARDS - ANIMES EM PROCESSAMENTO */
+            .processamento-titulo {
+                text-align: center;
+                margin: 0 0 10px;
+                color: #ffd700;
+            }
 
-        .processamento-aviso strong {
-            color: #fff;
-        }
+            .processamento-aviso {
+                text-align: center;
+                color: #ccc;
+                margin: 0 0 25px;
+                line-height: 1.6;
+            }
 
-        .processamento-secao {
-            margin-top: 28px;
-        }
+            .processamento-aviso strong {
+                color: #fff;
+            }
 
-        .processamento-secao h4 {
-            margin: 0 0 12px;
-            padding: 10px 14px;
-            border-left: 4px solid #e60000;
-            background: #242424;
-            border-radius: 6px;
-            color: #fff;
-            font-size: 1.05rem;
-        }
+            .processamento-secao {
+                margin-top: 28px;
+            }
 
-        .anime-cards {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 14px;
-        }
+            .processamento-secao h4 {
+                margin: 0 0 12px;
+                padding: 10px 14px;
+                border-left: 4px solid #e60000;
+                background: #242424;
+                border-radius: 6px;
+                color: #fff;
+                font-size: 1.05rem;
+            }
 
-        .anime-card {
-            background: linear-gradient(145deg, #292929, #202020);
-            border: 1px solid #383838;
-            border-radius: 10px;
-            padding: 16px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-        }
-
-        .anime-card:hover {
-            transform: translateY(-3px);
-            border-color: #e6b800;
-            box-shadow: 0 7px 18px rgba(230, 184, 0, 0.12);
-        }
-
-        .anime-card h5 {
-            margin: 0 0 12px;
-            color: #ffd700;
-            font-size: 1.05rem;
-        }
-
-        .anime-itens {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .anime-itens li {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
-            padding: 9px 0;
-            border-bottom: 1px solid #363636;
-            color: #ddd;
-            font-size: 0.94rem;
-        }
-
-        .anime-itens li:last-child {
-            border-bottom: 0;
-            padding-bottom: 0;
-        }
-
-        .anime-itens li:first-child {
-            padding-top: 0;
-        }
-
-        .badge-tipo {
-            flex-shrink: 0;
-            padding: 4px 8px;
-            border-radius: 999px;
-            font-size: 0.72rem;
-            font-weight: bold;
-            white-space: nowrap;
-            background: #333;
-            color: #fff;
-        }
-
-        .badge-legendado {
-            color: #00ff88;
-            border: 1px solid #00ff88;
-        }
-
-        .badge-ambos {
-            color: #00d9ff;
-            border: 1px solid #00d9ff;
-        }
-
-        .badge-breve {
-            color: #ffd700;
-            border: 1px solid #ffd700;
-        }
-
-        @media (max-width: 600px) {
             .anime-cards {
-                grid-template-columns: 1fr;
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 14px;
             }
 
             .anime-card {
-                padding: 14px;
+                background: linear-gradient(145deg, #292929, #202020);
+                border: 1px solid #383838;
+                border-radius: 10px;
+                padding: 16px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+                transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+            }
+
+            .anime-card:hover {
+                transform: translateY(-3px);
+                border-color: #e6b800;
+                box-shadow: 0 7px 18px rgba(230, 184, 0, 0.12);
+            }
+
+            .anime-card h5 {
+                margin: 0 0 12px;
+                color: #ffd700;
+                font-size: 1.05rem;
+            }
+
+            .anime-itens {
+                list-style: none;
+                padding: 0;
+                margin: 0;
             }
 
             .anime-itens li {
-                font-size: 0.9rem;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 10px;
+                padding: 9px 0;
+                border-bottom: 1px solid #363636;
+                color: #ddd;
+                font-size: 0.94rem;
             }
-        }
 
+            .anime-itens li:last-child {
+                border-bottom: 0;
+                padding-bottom: 0;
+            }
+
+            .anime-itens li:first-child {
+                padding-top: 0;
+            }
+
+            .badge-tipo {
+                flex-shrink: 0;
+                padding: 4px 8px;
+                border-radius: 999px;
+                font-size: 0.72rem;
+                font-weight: bold;
+                white-space: nowrap;
+                background: #333;
+                color: #fff;
+            }
+
+            .badge-legendado {
+                color: #00ff88;
+                border: 1px solid #00ff88;
+            }
+
+            .badge-ambos {
+                color: #00d9ff;
+                border: 1px solid #00d9ff;
+            }
+
+            .badge-breve {
+                color: #ffd700;
+                border: 1px solid #ffd700;
+            }
+
+            @media (max-width: 600px) {
+                .anime-cards {
+                    grid-template-columns: 1fr;
+                }
+
+                .anime-card {
+                    padding: 14px;
+                }
+
+                .anime-itens li {
+                    font-size: 0.9rem;
+                }
+            }
         </style>
     </header>
 
@@ -488,7 +488,10 @@
                 <div class="anime-cards">
 
                     <div class="anime-card">
-                        <h5> Shingeki no Kyojin</h5>
+                        <a href="https://j-s-an.github.io/lista-anime.html#q=Shingeki+no+Kyojin"
+                        style="color: inherit; text-decoration: none;">
+                        <h5>Shingeki no Kyojin</h5>
+                    </a>
                         <ul class="anime-itens">
                             <li>
                                 <span>Chronicle</span>
@@ -530,7 +533,7 @@
                     </div>
 
                     <div class="anime-card">
-                        <h5> SKikansha no Mahou</h5>
+                        <h5> Kikansha no Mahou</h5>
                         <ul class="anime-itens">
                             <li>
                                 <span>Kikansha no Mahou wa Tokubetsu desu</span>
@@ -545,57 +548,60 @@
             <div class="processamento-secao">
                 <h4>🕒 Ainda em processamento</h4>
 
-                    <div class="anime-card">
-                        
-                        <h5> Lupin III</h5>
-                        <ul class="anime-itens">
-                            <li>
-                                <span>Lupin III: Part V</span>
-                                <span class="badge-tipo badge-ambos">Ambos</span>
-                            </li>
-                            <li>
-                                <span>Lupin III: Part VI – Jidai</span>
-                                <span class="badge-tipo badge-ambos">Ambos</span>
-                            </li>
-                            <li>
-                                <span>Lupin III: Part VI</span>
-                                <span class="badge-tipo badge-ambos">Ambos</span>
-                            </li>
-                            <li>
-                                <span>Lupin III: Part IV – Specials</span>
-                                <span class="badge-tipo badge-ambos">Ambos</span>
-                            </li>
-                        </ul>
-                    </div><br>
+                <div class="anime-card">
 
-                    <div class="anime-card">
-                        <h5> JoJo no Kimyou na Bouken</h5>
-                        <ul class="anime-itens">
-                            <li>
-                                <span>Anime</span>
-                                <span class="badge-tipo badge-breve">Em breve</span>
-                            </li>
-                        </ul>
-                    </div><br>
+                    <a href="https://j-s-an.github.io/lista-anime.html#q=lupin"
+                        style="color: inherit; text-decoration: none;">
+                        <h5>Lupin III</h5>
+                    </a>
+                    <ul class="anime-itens">
+                        <li>
+                            <span>Lupin III: Part V</span>
+                            <span class="badge-tipo badge-ambos">Ambos</span>
+                        </li>
+                        <li>
+                            <span>Lupin III: Part VI – Jidai</span>
+                            <span class="badge-tipo badge-ambos">Ambos</span>
+                        </li>
+                        <li>
+                            <span>Lupin III: Part VI</span>
+                            <span class="badge-tipo badge-ambos">Ambos</span>
+                        </li>
+                        <li>
+                            <span>Lupin III: Part IV – Specials</span>
+                            <span class="badge-tipo badge-ambos">Ambos</span>
+                        </li>
+                    </ul>
+                </div><br>
+
+                <div class="anime-card">
+                    <h5> JoJo no Kimyou na Bouken</h5>
+                    <ul class="anime-itens">
+                        <li>
+                            <span>Anime</span>
+                            <span class="badge-tipo badge-breve">Em breve</span>
+                        </li>
+                    </ul>
+                </div><br>
 
 
 
-                </div>
             </div>
         </div>
+    </div>
 
-        <div>
-            <!-- Exemplo de inclusão do rodapé com JavaScript -->
-            <script>
-                fetch('footer.html')
-                    .then(response => response.text())
-                    .then(data => {
-                        document.body.insertAdjacentHTML('beforeend', data);
-                    });
-            </script>
-        </div>
+    <div>
+        <!-- Exemplo de inclusão do rodapé com JavaScript -->
+        <script>
+            fetch('footer.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.body.insertAdjacentHTML('beforeend', data);
+                });
+        </script>
+    </div>
 
-        <script>(function(s){s.dataset.zone='10964953',s.src='https://n6wxm.com/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+    <script>(function (s) { s.dataset.zone = '10964953', s.src = 'https://n6wxm.com/vignette.min.js' })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
 
 </body>
 
