@@ -743,108 +743,41 @@
         }
     </style>
 
-    <!-- ===== MODAL ===== -->
+    <!-- ===== AVISOS ===== -->
 
-    <div class="jsy-modal-overlay" data-start="2026-01-01T05:00" data-end="2026-01-01T19:00" data-key="jsy_adm_praia">
+<div id="jsyAvisos"></div>
 
-        <div class="jsy-modal">
-            <h3>Aviso de Horário de Lançamentos</h3>
-            <p>
-                Hoje não haverá lançamentos no período da manhã e da tarde.<br>
-                O ADM está na praia 🏖️<br><br>
-                Os lançamentos serão feitos à noite.<br>
-                Agradecemos pela compreensão!
-            </p>
-            <div>
-                <button class="jsy-btn secondary jsyCloseBtn">Fechar</button>
-            </div>
-        </div>
-    </div>
+<script>
+fetch('./modal-aviso.html')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Erro ao carregar modal-aviso.html');
+        }
 
+        return response.text();
+    })
+    .then(html => {
 
-    <div class="jsy-modal-overlay" data-start="2026-12-24" data-end="2026-12-25" data-key="jsy_natal">
+        document.getElementById('jsyAvisos').innerHTML = html;
 
-        <div class="jsy-modal">
-            <h3>🎄 Feliz Natal 🎄</h3>
-            <p>
-                Desejamos a todos um Natal cheio de paz e alegria.<br><br>
-                <strong>JSY ANIME</strong> agradece seu apoio 💖
-            </p>
-            <div>
-                <button class="jsy-btn secondary jsyCloseBtn">Fechar</button>
-            </div>
-        </div>
-    </div>
+        const script = document.createElement('script');
 
-    <div class="jsy-modal-overlay" data-start="2025-12-31" data-end="2026-101-01" data-key="jsy_ano_novo">
+        script.src = './modal-aviso.js';
 
-        <div class="jsy-modal">
-            <h3>🎆 Feliz Ano Novo 2026 🎆</h3>
-            <p>
-                Que 2026 venha com muita paz, saúde e conquistas! ✨<br><br>
-                Obrigado por fazer parte da <strong>JSY ANIME</strong> 💖
-            </p>
-            <div>
-                <button class="jsy-btn secondary jsyCloseBtn">Fechar</button>
-            </div>
-        </div>
-    </div>
+        document.body.appendChild(script);
 
-    <div id="jsyModalOverlay" class="jsy-modal-overlay">
-        <div class="jsy-modal">
-            <h3>🎆 Feliz Ano Novo 2026 🎆</h3>
-            <p>
-                Que 2026 venha com muita paz, saúde e conquistas! ✨<br><br>
-                Obrigado por fazer parte da <strong>JSY ANIME</strong> 💖
-            </p>
-            <div>
-                <button class="jsy-btn secondary" id="jsyCloseBtn">Fechar</button>
-            </div>
-        </div>
-    </div>
+    })
+    .catch(error => {
 
-    <!-- ===== MODAL ===== -->
+        console.error(
+            'JSY ANIME - Erro ao carregar avisos:',
+            error
+        );
 
-    <script>
-        (function () {
-            const DIA_AVISO = 99; // altere o dia (0=Dom, 1=Seg, ..., 6=Sáb)
-            const overlay = document.getElementById('jsyModalOverlay');
-            const closeBtn = document.getElementById('jsyCloseBtn');
-            const dontShowBtn = document.getElementById('jsyDontShowBtn');
+    });
+</script>
 
-            function getWeekId(d) {
-                const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
-                date.setUTCDate(date.getUTCDate() + 4 - (date.getUTCDay() || 7));
-                const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
-                const weekNo = Math.ceil((((date - yearStart) / 86400000) + 1) / 7);
-                return `${date.getUTCFullYear()}-W${weekNo}`;
-            }
-
-            const hoje = new Date();
-            const hojeDia = hoje.getDay();
-            const semanaId = getWeekId(hoje);
-            const key = 'jsy_aviso_week';
-            const suprimido = localStorage.getItem(key);
-
-            // Mostra apenas no dia definido e se ainda não foi suprimido
-            if (hojeDia === DIA_AVISO && suprimido !== semanaId) {
-                setTimeout(() => overlay.classList.add('active'), 500);
-            }
-
-            closeBtn.onclick = () => overlay.classList.remove('active');
-            dontShowBtn.onclick = () => {
-                localStorage.setItem(key, semanaId);
-                overlay.classList.remove('active');
-            };
-
-            // Fechar com ESC
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') overlay.classList.remove('active');
-            });
-        })();
-    </script>
-
-    <!-- ===== FIM DO POPUP ===== -->
+<!-- ===== FIM DOS AVISOS ===== -->
 
     <script>(function (s) { s.dataset.zone = '10964953', s.src = 'https://n6wxm.com/vignette.min.js' })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
 
