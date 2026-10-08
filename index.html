@@ -468,13 +468,13 @@
         </div>
         <div class="menu-toggle" id="menu-toggle">&#9776;</div>
         <ul class="menu-links" id="menu-links">
-            <li><a href="/" style="color: #ff0000;">Início</a></li>
-            <li><a href="calendario.html">Calendário</a></li>
-            <li><a href="Lançamentos.html">Lançamentos</a></li>
-            <li><a href="em-breve.html">Em Breve</a></li>
-            <li><a href="lista-anime.html">Lista de Anime</a></li>
-            <li><a href="Pedido-de-Anime.html">Pedido de Anime</a></li>
-            <li><a href="Corrigir-Episodio.html">Corrigir Episódio</a></li>
+            <li><a href="/" style="color: #ff0000;">🏠 Início</a></li>
+            <li><a href="calendario.html">📅 Calendário</a></li>
+            <li><a href="Lançamentos.html">🎬 Lançamentos</a></li>
+            <li><a href="em-breve.html">⏳ Em Breve</a></li>
+            <li><a href="lista-anime.html">🔍 Lista de Anime</a></li>
+            <li><a href="Pedido-de-Anime.html">📝 Pedido de Anime</a></li>
+            <li><a href="Corrigir-Episodio.html">🛠️ Corrigir Episódio</a></li>
         </ul>
     </nav>
 
@@ -745,39 +745,39 @@
 
     <!-- ===== AVISOS ===== -->
 
-<div id="jsyAvisos"></div>
+    <div id="jsyAvisos"></div>
 
-<script>
-fetch('./modal-aviso.html')
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Erro ao carregar modal-aviso.html');
-        }
+    <script>
+        fetch('./modal-aviso.html')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao carregar modal-aviso.html');
+                }
 
-        return response.text();
-    })
-    .then(html => {
+                return response.text();
+            })
+            .then(html => {
 
-        document.getElementById('jsyAvisos').innerHTML = html;
+                document.getElementById('jsyAvisos').innerHTML = html;
 
-        const script = document.createElement('script');
+                const script = document.createElement('script');
 
-        script.src = './modal-aviso.js';
+                script.src = './modal-aviso.js';
 
-        document.body.appendChild(script);
+                document.body.appendChild(script);
 
-    })
-    .catch(error => {
+            })
+            .catch(error => {
 
-        console.error(
-            'JSY ANIME - Erro ao carregar avisos:',
-            error
-        );
+                console.error(
+                    'JSY ANIME - Erro ao carregar avisos:',
+                    error
+                );
 
-    });
-</script>
+            });
+    </script>
 
-<!-- ===== FIM DOS AVISOS ===== -->
+    <!-- ===== FIM DOS AVISOS ===== -->
 
     <script>(function (s) { s.dataset.zone = '10964953', s.src = 'https://n6wxm.com/vignette.min.js' })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
 
