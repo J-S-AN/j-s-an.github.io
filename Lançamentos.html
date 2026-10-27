@@ -339,6 +339,10 @@
       background: #2979ff;
     }
 
+    .badge.MAIS {
+      background: #ff0000;
+    }
+
     .badge.fixo {
       background: #000000;
     }
@@ -524,6 +528,9 @@
         }
         if (qualidades.includes('FHD')) {
           badgesHTML += `<span class="badge fhd">FHD</span>`;
+        }
+        if (qualidades.includes('MAIS')) {
+          badgesHTML += `<span class="badge MAIS">+18</span>`;
         }
 
         const epStr = String(ep).trim();
